@@ -64,6 +64,7 @@ def plug_letters(t):
     elif t in player_Y_moves:
         moves[t] = "O"
 
+#board
 def display_board():
     print(f"""
     A   B   C
@@ -75,6 +76,7 @@ def display_board():
     3) {moves['a3']}| {moves['b3']} |{moves['c3']}""")
     
 
+#Calling of functions
 print(""" 
         ----------------------
         Let's play Py-Pac-Poe!
@@ -83,4 +85,3 @@ display_board()
 x_choice()
 y_choice()
 
-print(winning_combos[8])
