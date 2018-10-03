@@ -15,7 +15,7 @@ moves = {'a1':' ','a2':' ','a3':' ','b1':' ','b2':' ','b3':' ','c1':' ','c2':' '
 
 #functions
 def check_for_win():
-    if len(total_moves) == 9:
+    if len(total_moves) >= 9:
         for i in winning_combos:
             if player_X_moves not in i:
                 print("Tie!")
@@ -23,49 +23,39 @@ def check_for_win():
             elif player_Y_moves not in i:
                 print("Tie!")
                 return
-    for i in winning_combos:
-        if len(player_X_moves) > 3 and player_X_moves in i:
-            print("Player X wins the game!")
-            return
-        elif len(player_Y_moves) > 3 and player_Y_moves in i:
-            print("Player Y wins the game!")
-            return
-
-
-
-def bogus_check(p):
-        if p in player_X_moves or p in player_Y_moves:
-            print("Bogus move! Try again...")
-            if p in player_X_moves:
-                x_choice()
-            elif p in player_Y_moves:
-                y_choice()
-        elif p not in valid_moves:
-            print("Bogus move! Try again...")
-
+    for i in player_X_moves:
+        for z in winning_combos:
+            if i in z:
+                print(z)
+                
 
 #Player X move
 def x_choice(): 
-    choice = str(input("Player X move (example b3): "))
-    bogus_check(choice)
-    player_X_moves.append(choice)
-    total_moves.append(choice)
-    plug_letters(choice)
-    check_for_win()
-    display_board()
-    y_choice()
-    
+    choice = str(input("Player X move (example b3): ")).lower()
+    if choice not in total_moves and choice in valid_moves:
+        player_X_moves.append(choice)
+        total_moves.append(choice)
+        plug_letters(choice)
+        check_for_win()
+        display_board()
+        y_choice()
+    else: 
+        print("Bogus move! Try again...")
+        return choice
 
 #Player Y move
 def y_choice():
-    choice = str(input("Player O move (example c2): "))
-    bogus_check(choice)
-    player_Y_moves.append(choice)
-    total_moves.append(choice)
-    plug_letters(choice)
-    check_for_win()
-    display_board()
-    x_choice()
+    choice = str(input("Player O move (example c2): ")).lower()
+    if choice not in total_moves and choice in valid_moves:        
+        player_Y_moves.append(choice)
+        total_moves.append(choice)
+        plug_letters(choice)
+        check_for_win()
+        display_board()
+        x_choice()
+    else: 
+        print("Bogus move! Try again...")
+        return choice    
 
 # adds letters to 
 def plug_letters(t):
@@ -93,3 +83,4 @@ display_board()
 x_choice()
 y_choice()
 
+print(winning_combos[8])
