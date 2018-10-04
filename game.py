@@ -1,4 +1,6 @@
 #Variables
+global game_over
+game_over = False
 global player_X_moves
 player_X_moves = []
 global player_Y_moves
@@ -20,27 +22,41 @@ winning_combos = [
 [moves['a1'],moves['b2'],moves['c3']],
 [moves['a3'],moves['b2'],moves['c1']]]
 
-
-
-#functions
-def check_for_win():
+##--Functions--##
+#Brute force approach (Unfortunately)
+def check_for_win(v):
     if len(total_moves) >= 9:
         for i in winning_combos:
             if player_X_moves not in i:
                 print("Tie!")
-                return
+                game_over = True
             elif player_Y_moves not in i:
                 print("Tie!")
-                return
-    move_checker()
-
-def move_checker():
-    for x in winning_combos:
-        if x[0] in player_X_moves and x[1] in player_X_moves and x[2] in player_X_moves:
-            print("Player X Wins!")
-        if x[0] in player_Y_moves and x[1] in player_Y_moves and x[2] in player_Y_moves:
-            print("Player O Wins!")
-
+                game_over = True
+    if moves['a1'] == v and moves['a2'] == v and moves['a3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['b1'] == v and moves['b2'] == v and moves['b3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['c1'] == v and moves['c2'] == v and moves['c3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['a1'] == v and moves['b1'] == v and moves['c1'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['a2'] == v and moves['b2'] == v and moves['c2'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['a3'] == v and moves['b3'] == v and moves['c3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['a1'] == v and moves['b2'] == v and moves['c3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
+    if moves['c1'] == v and moves['b2'] == v and moves['a3'] == v: 
+        print(f"Player {v} winner!") 
+        game_over = True
 
 #Player X move
 def x_choice(): 
@@ -50,11 +66,10 @@ def x_choice():
     player_X_moves.append(choice)
     total_moves.append(choice)
     plug_letters(choice)
-    print(player_X_moves)
-    check_for_win()
+    check_for_win("X")
     display_board()
-    y_choice()
-
+    while not game_over:
+        y_choice()
 
 #Player Y move
 def y_choice():
@@ -64,10 +79,10 @@ def y_choice():
     player_Y_moves.append(choice)
     total_moves.append(choice)
     plug_letters(choice)
-    print(player_Y_moves)
-    check_for_win()
+    check_for_win("O")
     display_board()
-    x_choice()
+    while not game_over:
+        x_choice()
 
 
 # adds letters to board
